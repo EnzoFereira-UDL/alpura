@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="description" content="Alpura – Productos lácteos de la más alta calidad. Leches, yoghurts, quesos y más, directo del campo a tu mesa.">
+    <meta name="author" content="Alpura">
+    <meta name="theme-color" content="#1A2B6B">
+
+    <meta property="og:title" content="Alpura – Come Bien">
+    <meta property="og:description" content="Productos lácteos de la más alta calidad. Leches, yoghurts, quesos y más.">
+    <meta property="og:type" content="website">
+
+    <title>Alpura – Come Bien</title>
+    <link rel="shortcut icon" href="img/alpuralogo.ico">
+    <!-- Google Fonts: Raleway + Sora (mismo stack que Conaprole) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
+</head>
+<body>
+
+<!-- ===================== LOADER ===================== -->
+<div id="page-loader" class="page-loader">
+    <div class="loader-inner">
+        <img src="img/alpura-logo.png" alt="Alpura" class="loader-logo">
+        <div class="loader-bar"><div class="loader-fill"></div></div>
+    </div>
+</div>
+
+<!-- ===================== NAVIGATION ===================== -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <!-- Logo -->
+        <a href="#home" class="nav-logo" id="nav-logo-link">
+            <img src="img/alpura-logo.png" alt="Alpura" id="nav-logo-img">
+        </a>
+
+        <!-- Desktop Menu -->
+        <ul class="nav-links" id="nav-links">
+            <li class="nav-item has-dropdown">
+                <a href="#productos" class="nav-link">
+                    Productos
+                    <svg class="chevron" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+                </a>
+                <div class="mega-menu">
+                    <div class="mega-menu-grid">
+                        <a href="#leches" class="mega-item" data-category="leches">
+                            <div class="mega-icon">🥛</div>
+                            <span>Leches</span>
+                        </a>
+                        <a href="#yoghurt" class="mega-item" data-category="yoghurt">
+                            <div class="mega-icon">🫙</div>
+                            <span>Yoghurts</span>
+                        </a>
+                        <a href="#quesos" class="mega-item" data-category="quesos">
+                            <div class="mega-icon">🧀</div>
+                            <span>Quesos</span>
+                        </a>
+                        <a href="#cremas" class="mega-item" data-category="cremas">
+                            <div class="mega-icon">🍦</div>
+                            <span>Cremas</span>
+                        </a>
+                        <a href="#mantequilla" class="mega-item" data-category="mantequilla">
+                            <div class="mega-icon">🧈</div>
+                            <span>Mantequilla</span>
+                        </a>
+                        <a href="#postres" class="mega-item" data-category="postres">
+                            <div class="mega-icon">🍮</div>
+                            <span>Postres</span>
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a href="#nosotros" class="nav-link">Nosotros</a>
+            </li>
+            <li class="nav-item">
+                <a href="#sustentabilidad" class="nav-link">Sustentabilidad</a>
+            </li>
+            <li class="nav-item">
+                <a href="#recetas" class="nav-link">Recetas</a>
+            </li>
+            <li class="nav-item">
+                <a href="#contacto" class="nav-link">Contacto</a>
+            </li>
+        </ul>
+
+        <!-- Right actions -->
+        <div class="nav-actions">
+            <button class="btn-search" id="btn-search" aria-label="Buscar">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                    <circle cx="7.5" cy="7.5" r="6" stroke="currentColor" stroke-width="1.8"/>
+                    <path d="M12 12l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+            </button>
+            <button class="btn-user" id="btn-user" aria-label="Usuario">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </button>
+            <!-- Mobile hamburger -->
+            <button class="hamburger" id="hamburger" aria-label="Menú">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Search bar -->
+    <div class="search-bar" id="search-bar">
+        <div class="search-inner">
+            <input type="text" placeholder="¿Qué producto buscas?" id="search-input" class="search-input">
+            <button class="search-close" id="search-close">✕</button>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu-inner">
+        <a href="#productos" class="mobile-link">Productos</a>
+        <a href="#nosotros" class="mobile-link">Nosotros</a>
+        <a href="#sustentabilidad" class="mobile-link">Sustentabilidad</a>
+        <a href="#recetas" class="mobile-link">Recetas</a>
+        <a href="#contacto" class="mobile-link">Contacto</a>
+        
+    </div>
+</div>
+
+<!-- ===================== HERO SLIDER ===================== -->
+<main class="main-content">
+<section class="hero" id="home">
+    <div class="hero-slider" id="hero-slider">
+
+        <!-- Slide 1: Yoghurt Griego -->
+        <div class="hero-slide active" id="slide-1">
+            <div class="slide-bg" style="background-image: url('img/Alpura-Griego-Web-Banner-Home.webp');"></div>
+            <div class="slide-overlay"></div>
+            <div class="slide-content">
+                <span class="slide-tag animate-in">Nuevo</span>
+                <h1 class="slide-title animate-in delay-1">Un Griego<br><em>Bien Hecho</em></h1>
+                <p class="slide-desc animate-in delay-2">Inspirado en el método auténtico. Cremoso, sin grasa, con 11g de proteína.</p>
+                <a href="#yoghurt" class="btn-hero animate-in delay-3">Conoce más</a>
+            </div>
+        </div>
+
+        <!-- Slide 2: Quesos -->
+        <div class="hero-slide" id="slide-2">
+            <div class="slide-bg" style="background-image: url('img/01-HomePage_Quesos_MG_CTA_11zon.jpg');"></div>
+            <div class="slide-overlay"></div>
+            <div class="slide-content">
+                <span class="slide-tag animate-in">Nuevos</span>
+                <h1 class="slide-title animate-in delay-1">PorQUE<em>SO</em>mos<br>Alpura</h1>
+                <p class="slide-desc animate-in delay-2">Aporta calcio y proteína en cada porción. Descubre nuestra línea de quesos.</p>
+                <a href="#quesos" class="btn-hero animate-in delay-3">Descubrir</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Slider controls -->
+    <div class="slider-controls">
+        <button class="slider-btn prev" id="slider-prev" aria-label="Anterior">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M13 4l-6 6 6 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        <div class="slider-dots" id="slider-dots">
+            <button class="dot active" data-index="0"></button>
+            <button class="dot" data-index="1"></button>
+        </div>
+        <button class="slider-btn next" id="slider-next" aria-label="Siguiente">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M7 4l6 6-6 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-hint">
+        <div class="scroll-mouse">
+            <div class="scroll-wheel"></div>
+        </div>
+        <span>Desliza</span>
+    </div>
+</section>
+
+<!-- ===================== CATEGORIES STRIP ===================== -->
+<section class="categories-strip" id="productos">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Nuestros <span class="accent">Productos</span></h2>
+            <p class="section-subtitle">Calidad certificada del campo a tu mesa</p>
+        </div>
+        <div class="categories-grid">
+            <a href="#leches" class="cat-card" id="cat-leches">
+                <div class="cat-icon-wrap">
+                    <svg class="cat-icon" viewBox="0 0 60 80" fill="none">
+                        <rect x="15" y="20" width="30" height="50" rx="4" fill="currentColor" opacity="0.15"/>
+                        <rect x="20" y="15" width="20" height="8" rx="2" fill="currentColor" opacity="0.3"/>
+                        <path d="M18 35 Q30 42 42 35" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <path d="M18 45 Q30 52 42 45" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.6"/>
+                        <circle cx="30" cy="60" r="4" fill="currentColor" opacity="0.4"/>
+                    </svg>
+                </div>
+                <span class="cat-name">Leches</span>
+                <div class="cat-arrow">→</div>
+            </a>
+            <a href="#yoghurt" class="cat-card" id="cat-yoghurt">
+                <div class="cat-icon-wrap">
+                    <svg class="cat-icon" viewBox="0 0 60 80" fill="none">
+                        <rect x="12" y="22" width="36" height="45" rx="8" fill="currentColor" opacity="0.15"/>
+                        <ellipse cx="30" cy="22" rx="18" ry="6" fill="currentColor" opacity="0.3"/>
+                        <path d="M20 38 Q30 45 40 38" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <circle cx="30" cy="52" r="5" fill="currentColor" opacity="0.3"/>
+                    </svg>
+                </div>
+                <span class="cat-name">Yoghurts</span>
+                <div class="cat-arrow">→</div>
+            </a>
+            <a href="#quesos" class="cat-card" id="cat-quesos">
+                <div class="cat-icon-wrap">
+                    <svg class="cat-icon" viewBox="0 0 80 60" fill="none">
+                        <path d="M10 50 L10 30 L40 10 L70 30 L70 50 Z" fill="currentColor" opacity="0.15"/>
+                        <path d="M10 30 L40 10 L70 30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.5"/>
+                        <circle cx="28" cy="38" r="5" fill="currentColor" opacity="0.4"/>
+                        <circle cx="48" cy="32" r="3" fill="currentColor" opacity="0.3"/>
+                    </svg>
+                </div>
+                <span class="cat-name">Quesos</span>
+                <div class="cat-arrow">→</div>
+            </a>
+            <a href="#cremas" class="cat-card" id="cat-cremas">
+                <div class="cat-icon-wrap">
+                    <svg class="cat-icon" viewBox="0 0 60 80" fill="none">
+                        <rect x="10" y="30" width="40" height="40" rx="4" fill="currentColor" opacity="0.15"/>
+                        <path d="M10 30 Q15 15 30 12 Q45 15 50 30" fill="currentColor" opacity="0.2"/>
+                        <path d="M20 45 Q30 55 40 45" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                </div>
+                <span class="cat-name">Cremas</span>
+                <div class="cat-arrow">→</div>
+            </a>
+            <a href="#mantequilla" class="cat-card" id="cat-mantequilla">
+                <div class="cat-icon-wrap">
+                    <svg class="cat-icon" viewBox="0 0 80 60" fill="none">
+                        <rect x="10" y="20" width="60" height="30" rx="4" fill="currentColor" opacity="0.15"/>
+                        <rect x="18" y="26" width="44" height="18" rx="2" fill="currentColor" opacity="0.25"/>
+                        <line x1="10" y1="35" x2="70" y2="35" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+                    </svg>
+                </div>
+                <span class="cat-name">Mantequilla</span>
+                <div class="cat-arrow">→</div>
+            </a>
+            <a href="#postres" class="cat-card" id="cat-postres">
+                <div class="cat-icon-wrap">
+                    <svg class="cat-icon" viewBox="0 0 60 80" fill="none">
+                        <path d="M15 40 Q15 25 30 22 Q45 25 45 40 L45 65 Q45 68 42 68 L18 68 Q15 68 15 65 Z" fill="currentColor" opacity="0.15"/>
+                        <path d="M22 22 Q25 10 30 8 Q35 10 38 22" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <circle cx="30" cy="8" r="3" fill="currentColor" opacity="0.5"/>
+                        <path d="M20 50 Q30 58 40 50" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.6"/>
+                    </svg>
+                </div>
+                <span class="cat-name">Postres</span>
+                <div class="cat-arrow">→</div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== FEATURED PRODUCT ===================== -->
+<section class="featured-section" id="yoghurt">
+    <div class="container">
+        <div class="featured-grid">
+            <div class="featured-img-wrap">
+                <img src="img/Alpura-Griego-Web-Banner-Home.webp" alt="Yoghurt Griego Alpura" class="featured-img" loading="lazy">
+                <div class="featured-badge">Nuevo</div>
+            </div>
+            <div class="featured-content">
+                <span class="eyebrow">Línea Griego</span>
+                <h2 class="featured-title">Un Griego<br><em>Bien Hecho</em></h2>
+                <div class="featured-attrs">
+                    <div class="attr-pill">
+                        <strong>11g</strong>
+                        <span>Proteína</span>
+                    </div>
+                    <div class="attr-pill">
+                        <strong>0%</strong>
+                        <span>Grasa</span>
+                    </div>
+                    <div class="attr-pill">
+                        <strong>100%</strong>
+                        <span>Natural</span>
+                    </div>
+                </div>
+                <p class="featured-desc">Inspirado en el método auténtico griego. Cremosidad mitológica con el sabor y la calidad que sólo Alpura puede darte.</p>
+                <div class="featured-ctas">
+                    <a href="#" class="btn-primary">Ver producto</a>
+                    <a href="#recetas" class="btn-ghost">Ver recetas</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== SECOND FEATURED (Quesos) ===================== -->
+<section class="featured-section alt" id="quesos">
+    <div class="container">
+        <div class="featured-grid reverse">
+            <div class="featured-content">
+                <span class="eyebrow">Línea Quesos</span>
+                <h2 class="featured-title">Por<em>Que So</em>mos<br>Alpura</h2>
+                <p class="featured-desc">Oaxaca, Manchego Rebanado, Americano Rebanado – nuevos quesos que aportan calcio y proteína a cada momento del día.</p>
+                <ul class="feature-list">
+                    <li>
+                        <svg class="check-icon" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        100% leche de vaca
+                    </li>
+                    <li>
+                        <svg class="check-icon" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Alto en calcio y proteína
+                    </li>
+                    <li>
+                        <svg class="check-icon" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Sabor auténtico mexicano
+                    </li>
+                </ul>
+                <div class="featured-ctas">
+                    <a href="#" class="btn-primary">Ver quesos</a>
+                </div>
+            </div>
+            <div class="featured-img-wrap">
+                <img src="img/01-HomePage_Quesos_MG_CTA_11zon.jpg" alt="Quesos Alpura" class="featured-img" loading="lazy">
+                <div class="featured-badge new">Nuevos</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== VALUES / PILLARS ===================== -->
+<section class="values-section" id="nosotros">
+    <div class="values-bg-shape"></div>
+    <div class="container">
+        <div class="section-header centered">
+            <h2 class="section-title">¿Por qué <span class="accent">Alpura</span>?</h2>
+            <p class="section-subtitle">Comprometidos con tu bienestar y el del planeta</p>
+        </div>
+        <div class="values-grid">
+            <div class="value-card" id="val-1">
+                <div class="value-icon-wrap">
+                    <svg viewBox="0 0 48 48" fill="none" class="value-icon">
+                        <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2"/>
+                        <path d="M16 24c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <circle cx="24" cy="24" r="3" fill="currentColor"/>
+                    </svg>
+                </div>
+                <h3 class="value-title">Calidad Certificada</h3>
+                <p class="value-text">Cumplimos con los más altos estándares de inocuidad y calidad en cada etapa de producción.</p>
+            </div>
+            <div class="value-card" id="val-2">
+                <div class="value-icon-wrap">
+                    <svg viewBox="0 0 48 48" fill="none" class="value-icon">
+                        <path d="M24 8 C14 8 8 16 8 24 C8 35 16 40 24 42 C32 40 40 35 40 24 C40 16 34 8 24 8Z" stroke="currentColor" stroke-width="2"/>
+                        <path d="M24 16 L24 28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M18 22 L30 22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h3 class="value-title">Nutrición Real</h3>
+                <p class="value-text">Productos enriquecidos con calcio, proteínas y vitaminas esenciales para toda la familia.</p>
+            </div>
+            <div class="value-card" id="val-3">
+                <div class="value-icon-wrap">
+                    <svg viewBox="0 0 48 48" fill="none" class="value-icon">
+                        <path d="M8 36 Q24 8 40 36" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <path d="M16 36 Q24 20 32 36" stroke="currentColor" stroke-width="2" fill="none" opacity="0.5"/>
+                        <circle cx="24" cy="36" r="3" fill="currentColor"/>
+                    </svg>
+                </div>
+                <h3 class="value-title">Sustentabilidad</h3>
+                <p class="value-text">Comprometidos con el medio ambiente, reduciendo nuestra huella de carbono en cada proceso.</p>
+            </div>
+            <div class="value-card" id="val-4">
+                <div class="value-icon-wrap">
+                    <svg viewBox="0 0 48 48" fill="none" class="value-icon">
+                        <rect x="10" y="14" width="28" height="20" rx="4" stroke="currentColor" stroke-width="2"/>
+                        <path d="M18 22 L22 26 L30 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M24 34 L24 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M18 40 L30 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h3 class="value-title">Innovación</h3>
+                <p class="value-text">Investigación y desarrollo constante para traerte productos que superen tus expectativas.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== STATS BANNER ===================== -->
+<section class="stats-section">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="stat-num" data-target="60">0</span><span class="stat-suffix">+</span>
+                <span class="stat-label">Años de experiencia</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-num" data-target="120">0</span><span class="stat-suffix">M</span>
+                <span class="stat-label">Familias alimentadas</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-num" data-target="50">0</span><span class="stat-suffix">+</span>
+                <span class="stat-label">Productos en línea</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-num" data-target="100">0</span><span class="stat-suffix">%</span>
+                <span class="stat-label">Leche de vaca pura</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== RECIPES TEASER ===================== -->
+<section class="recipes-section" id="recetas">
+    <div class="container">
+        <div class="section-header centered">
+            <h2 class="section-title">Inspírate con nuestras <span class="accent">Recetas</span></h2>
+            <p class="section-subtitle">Deliciosas ideas para cada momento del día</p>
+        </div>
+        <div class="recipes-grid">
+            <article class="recipe-card" id="recipe-1">
+                <div class="recipe-img-wrap">
+                    <div class="recipe-placeholder" style="background: linear-gradient(135deg, #1A2B6B 0%, #00AEEF 100%);">
+                        <div class="recipe-emoji">🥗</div>
+                    </div>
+                    <span class="recipe-tag">Desayuno</span>
+                </div>
+                <div class="recipe-info">
+                    <h3 class="recipe-title">Bowl de Yoghurt Griego con Frutas</h3>
+                    <div class="recipe-meta">
+                        <span>⏱ 10 min</span>
+                        <span>👤 2 porciones</span>
+                    </div>
+                </div>
+            </article>
+            <article class="recipe-card large" id="recipe-2">
+                <div class="recipe-img-wrap">
+                    <div class="recipe-placeholder" style="background: linear-gradient(135deg, #003087 0%, #1A2B6B 100%);">
+                        <div class="recipe-emoji">🫕</div>
+                    </div>
+                    <span class="recipe-tag">Almuerzo</span>
+                </div>
+                <div class="recipe-info">
+                    <h3 class="recipe-title">Quesadillas de Queso Oaxaca Alpura</h3>
+                    <div class="recipe-meta">
+                        <span>⏱ 20 min</span>
+                        <span>👤 4 porciones</span>
+                    </div>
+                </div>
+            </article>
+            <article class="recipe-card" id="recipe-3">
+                <div class="recipe-img-wrap">
+                    <div class="recipe-placeholder" style="background: linear-gradient(135deg, #00AEEF 0%, #66B22E 100%);">
+                        <div class="recipe-emoji">🥤</div>
+                    </div>
+                    <span class="recipe-tag">Snack</span>
+                </div>
+                <div class="recipe-info">
+                    <h3 class="recipe-title">Smoothie Proteico de Frutas</h3>
+                    <div class="recipe-meta">
+                        <span>⏱ 5 min</span>
+                        <span>👤 1 porción</span>
+                    </div>
+                </div>
+            </article>
+        </div>
+        <div class="section-cta">
+            <a href="#" class="btn-outline">Ver todas las recetas</a>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== SUSTENTABILIDAD ===================== -->
+<section class="sustentabilidad-section" id="sustentabilidad">
+    <div class="sust-bg"></div>
+    <div class="container">
+        <div class="sust-content">
+            <span class="eyebrow light">Nuestro compromiso</span>
+            <h2 class="sust-title">Come Bien,<br>Vive <em>Mejor</em></h2>
+            <p class="sust-desc">En Alpura creemos que alimentarse bien es el primer paso hacia un futuro mejor. Por eso trabajamos cada día para brindarte productos nutritivos con el menor impacto ambiental posible.</p>
+        </div>
+    </div>
+    <div class="sust-wave-bottom">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 80V40C240 0 480 80 720 40C960 0 1200 80 1440 40V80H0Z" fill="#1A2B6B"/>
+        </svg>
+    </div>
+</section>
+
+<!-- ===================== AUTHENTICATION MODAL ===================== -->
+<div class="auth-modal" id="auth-modal">
+    <div class="auth-overlay" id="auth-overlay"></div>
+    <div class="auth-box">
+        <button class="auth-close" id="auth-close" aria-label="Cerrar">✕</button>
+        
+        <div class="auth-header">
+            <img src="img/alpura-logo2.png" alt="Alpura Logo" class="auth-logo">
+            <h3 class="auth-title" id="auth-title">Mi Cuenta</h3>
+        </div>
+
+        <div class="auth-tabs" id="auth-tabs-container">
+            <button class="auth-tab active" data-target="login">Iniciar Sesión</button>
+            <button class="auth-tab" data-target="register">Registrarse</button>
+        </div>
+
+        <div class="auth-forms">
+            <form id="login-form" class="auth-form active">
+                <div class="form-group">
+                    <label for="login-email">Correo electrónico</label>
+                    <input type="email" id="login-email" required placeholder="tu@correo.com">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Contraseña</label>
+                    <input type="password" id="login-password" required placeholder="••••••••">
+                </div>
+                <div id="login-error" class="form-error"></div>
+                <button type="submit" class="btn-primary auth-submit">Entrar</button>
+            </form>
+
+            <form id="register-form" class="auth-form">
+                <div class="form-group">
+                    <label>Elige tu Avatar</label>
+                    <div class="avatar-selection-wrapper">
+                        <div class="preset-container">
+                            <p class="avatar-subtext">Selecciona una opción predeterminada:</p>
+                            <div class="preset-list">
+                                <img src="https://eferreira.pythonanywhere.com/static/avatars/avatar1.png" class="preset-item active" data-avatar="avatar1.png">
+                                <img src="https://eferreira.pythonanywhere.com/static/avatars/avatar2.png" class="preset-item" data-avatar="avatar2.png">
+                                <img src="https://eferreira.pythonanywhere.com/static/avatars/avatar3.png" class="preset-item" data-avatar="avatar3.png">
+                            </div>
+                        </div>
+                        <div class="custom-container">
+                            <p class="avatar-subtext">O sube una foto personalizada:</p>
+                            <label for="reg-file-input" class="btn-upload-label">Subir Imagen</label>
+                            <input type="file" id="reg-file-input" accept="image/*" style="display: none;">
+                        </div>
+                        <div class="preview-container">
+                            <img id="reg-avatar-preview-img" src="https://eferreira.pythonanywhere.com/static/avatars/avatar1.png" class="avatar-preview-circle">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reg-name">Nombre completo</label>
+                    <input type="text" id="reg-name" required placeholder="Ej. Juan Pérez">
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Correo electrónico</label>
+                    <input type="email" id="reg-email" required placeholder="tu@correo.com">
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Contraseña</label>
+                    <input type="password" id="reg-password" required placeholder="Mínimo 6 caracteres">
+                </div>
+                <div id="register-error" class="form-error"></div>
+                <div id="register-success" class="form-success"></div>
+                <button type="submit" class="btn-primary auth-submit">Crear cuenta</button>
+            </form>
+
+            <div id="auth-profile-view" class="auth-profile-view">
+                <div class="profile-summary">
+                    <div class="profile-avatar">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <div class="profile-details">
+                        <h4 id="profile-user-name">Hola, Usuario</h4>
+                        <p id="profile-user-email">usuario@correo.com</p>
+                    </div>
+
+                    <div class="auth-profile-view">
+                        <button id="btn-list-users" class="btn-submit" style="display: none; margin-top: 15px; background-color: #1A2B6B; color: white;">
+                            Ver todos los usuarios
+                        </button>
+
+                        <div id="users-list-modal" style="display: none; margin-top: 20px; border-top: 1px solid var(--gray-light); padding-top: 15px;">
+                            <h4 style="margin-bottom: 10px; color: #1A2B6B;">Usuarios Registrados</h4>
+                            <div id="users-list-content" style="max-height: 220px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 5px;">
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="update-profile-form" class="profile-form">
+                    <div class="form-group">
+                        <label>Cambiar tu Avatar</label>
+                        <div class="avatar-selection-wrapper">
+                            <div class="preset-container">
+                                <p class="avatar-subtext">Cambiar a opción predeterminada:</p>
+                                <div class="preset-list">
+                                    <img src="https://eferreira.pythonanywhere.com/static/avatars/avatar1.png" class="preset-item-update" data-avatar="avatar1.png">
+                                    <img src="https://eferreira.pythonanywhere.com/static/avatars/avatar2.png" class="preset-item-update" data-avatar="avatar2.png">
+                                    <img src="https://eferreira.pythonanywhere.com/static/avatars/avatar3.png" class="preset-item-update" data-avatar="avatar3.png">
+                                </div>
+                                <div id="historial-avatares" style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;"></div>
+                            </div>
+                            <div class="custom-container">
+                                <p class="avatar-subtext">Sube una nueva foto propia:</p>
+                                <label for="update-file-input" class="btn-upload-label">Seleccionar Archivo</label>
+                                <input type="file" id="update-file-input" accept="image/*" style="display: none;">
+                            </div>
+                            <div class="preview-container">
+                                <img id="update-avatar-preview-img" src="https://eferreira.pythonanywhere.com/static/avatars/default-avatar.png" class="avatar-preview-circle">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-name">Modificar Nombre Completo</label>
+                        <input type="text" id="update-name" required placeholder="Nuevo nombre completo">
+                    </div>
+                    <div class="form-group">
+                        <label for="update-password">Modificar Contraseña</label>
+                        <input type="password" id="update-password" placeholder="Nueva contraseña (dejar vacío para no cambiar)">
+                    </div>
+                    <button type="submit" class="btn-primary auth-submit">Guardar Cambios</button>
+                </form>
+
+                <div class="logout-zone">
+                    <button type="button" id="btn-logout-trigger" class="btn-logout-trigger">Cerrar Sesión</button>
+                    
+                    <div id="logout-confirm-box" class="logout-confirm-box">
+                        <p>¿Estás seguro de que deseas cerrar tu sesión activa?</p>
+                        <div class="logout-confirm-actions">
+                            <button type="button" id="btn-logout-confirm" class="btn-confirm-yes">Sí, salir</button>
+                            <button type="button" id="btn-logout-cancel" class="btn-confirm-no">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="toast-container" class="toast-container"></div>
+
+</main><!-- /.main-content -->
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer" id="contacto">
+    <div class="footer-body">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Brand -->
+                <div class="footer-brand">
+                    <img src="img/alpura-logo.png" alt="Alpura" class="footer-logo">
+                    <p class="footer-tagline">Come Bien</p>
+                    <div class="social-links">
+                        <a href="#" class="social-btn" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                        </a>
+                        <a href="#" class="social-btn" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+                        </a>
+                        <a href="#" class="social-btn" aria-label="Twitter / X">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+                        <a href="#" class="social-btn" aria-label="YouTube">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.95C5.12 20 12 20 12 20s6.88 0 8.59-.47a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#1A2B6B"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Links -->
+                <div class="footer-col">
+                    <h4 class="footer-col-title">Productos</h4>
+                    <ul class="footer-links">
+                        <li><a href="#leches">Leches</a></li>
+                        <li><a href="#yoghurt">Yoghurts</a></li>
+                        <li><a href="#quesos">Quesos</a></li>
+                        <li><a href="#cremas">Cremas</a></li>
+                        <li><a href="#mantequilla">Mantequilla</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-col-title">Empresa</h4>
+                    <ul class="footer-links">
+                        <li><a href="#nosotros">Quiénes somos</a></li>
+                        <li><a href="#sustentabilidad">Sustentabilidad</a></li>
+                        <li><a href="#">Trabaja con nosotros</a></li>
+                        <li><a href="#">Proveedores</a></li>
+                        <li><a href="#">Noticias</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-col-title">Contacto</h4>
+                    <ul class="footer-links contact-info">
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2C7.24 2 5 4.24 5 7c0 3.75 5 11 5 11s5-7.25 5-11c0-2.76-2.24-5-5-5z"/><circle cx="10" cy="7" r="2"/></svg>
+                            Ciudad de México, México
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h16v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4z"/><path d="M2 4l8 7 8-7"/></svg>
+                            contacto@alpura.com
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4a1 1 0 0 1 1-1h3l1 4-2 1a11 11 0 0 0 5 5l1-2 4 1v3a1 1 0 0 1-1 1C7.16 17 3 12.84 3 8V4z"/></svg>
+                            800 ALPURA 0
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="footer-legal">© 2026 Alpura S.A. de C.V. Todos los derechos reservados.</p>
+                <div class="footer-legal-links">
+                    <a href="#">Aviso de privacidad</a>
+                    <a href="#">Términos y condiciones</a>
+                    <a href="#">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Back to top -->
+<button class="back-top" id="back-top" aria-label="Volver arriba">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M10 16V4M4 10l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+</button>
+
+<div id="cropper-modal" class="cropper-modal-overlay" style="display: none;">
+    <div class="cropper-modal-box">
+        <h3>Recortar tu Avatar</h3>
+        <p style="font-size: 0.78rem; color: #666; margin-bottom: 1rem;">Ajusta el recuadro cuadrado para definir tu foto.</p>
+        <div class="cropper-stage">
+            <img id="image-to-crop" src="" style="max-width: 100%; max-height: 320px; display: block;">
+        </div>
+        <div class="cropper-actions-btns">
+            <button type="button" id="btn-cancel-crop" class="btn-crop-cancel">Cancelar</button>
+            <button type="button" id="btn-confirm-crop" class="btn-crop-confirm">Recortar y Aplicar</button>
+        </div>
+    </div>
+</div>
+<script src="js/index.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+
+</body>
+</html>
