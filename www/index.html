@@ -40,6 +40,9 @@
 
         <!-- Desktop Menu -->
         <ul class="nav-links" id="nav-links">
+            <li class="nav-item" id="nav-users-item" style="display: none;">
+                <a href="#" class="nav-link" id="nav-users-link">Usuarios</a>
+            </li>
             <li class="nav-item has-dropdown">
                 <a href="#productos" class="nav-link">
                     Productos
@@ -120,7 +123,10 @@
 
 <!-- Mobile Menu -->
 <div class="mobile-menu" id="mobile-menu">
-    <div class="mobile-menu-inner">
+    <div id="nav-users-item-mobile" style="display: none;">
+        <a href="#" class="mobile-link" id="nav-users-link-mobile">Usuarios</a>
+    </div>
+    <div class="mobile-menu-inner"> 
         <a href="#productos" class="mobile-link">Productos</a>
         <a href="#nosotros" class="mobile-link">Nosotros</a>
         <a href="#sustentabilidad" class="mobile-link">Sustentabilidad</a>
@@ -583,18 +589,6 @@
                         <h4 id="profile-user-name">Hola, Usuario</h4>
                         <p id="profile-user-email">usuario@correo.com</p>
                     </div>
-
-                    <div class="auth-profile-view">
-                        <button id="btn-list-users" class="btn-submit" style="display: none; margin-top: 15px; background-color: #1A2B6B; color: white;">
-                            Ver todos los usuarios
-                        </button>
-
-                        <div id="users-list-modal" style="display: none; margin-top: 20px; border-top: 1px solid var(--gray-light); padding-top: 15px;">
-                            <h4 style="margin-bottom: 10px; color: #1A2B6B;">Usuarios Registrados</h4>
-                            <div id="users-list-content" style="max-height: 220px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 5px;">
-                                </div>
-                        </div>
-                    </div>
                 </div>
 
                 <form id="update-profile-form" class="profile-form">
@@ -751,6 +745,73 @@
         </div>
     </div>
 </div>
+<!-- ===================== USERS DATATABLE MODAL ===================== -->
+<div class="auth-modal" id="datatable-modal">
+    <div class="auth-overlay" id="datatable-overlay"></div>
+    <div class="auth-box" style="max-width: 800px;"> <button class="auth-close" id="datatable-close" aria-label="Cerrar">✕</button>
+        
+        <div class="auth-header">
+            <h3 class="auth-title">Directorio de Usuarios</h3>
+        </div>
+
+        <div style="margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <label style="font-size: 0.9rem; color: var(--gray-text);">
+                Mostrar 
+                <select id="users-limit-select" style="padding: 5px; border-radius: 5px; border: 1px solid var(--gray-light);">
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select> 
+                registros
+            </label>
+            
+            <div style="flex-grow: 1; max-width: 300px;">
+                <input type="text" id="users-search-input" placeholder="Buscar por nombre o email..." style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid var(--gray-light);">
+            </div>
+        </div>
+
+        <div style="max-height: 400px; overflow-y: auto; border: 1px solid var(--gray-light); border-radius: 10px;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                <thead style="background: var(--off-white); position: sticky; top: 0; z-index: 1;">
+                    <tr>
+                        <th style="padding: 12px; border-bottom: 2px solid var(--gray-light);">Avatar</th>
+                        <th style="padding: 12px; border-bottom: 2px solid var(--gray-light);">Nombre</th>
+                        <th style="padding: 12px; border-bottom: 2px solid var(--gray-light);">Email</th>
+                        <th style="padding: 12px; border-bottom: 2px solid var(--gray-light); text-align: center;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="datatable-body">
+                    </tbody>
+            </table>
+        </div>
+
+        <div style="margin-top: 1rem; display: flex; justify-content: flex-end; gap: 10px; align-items: center;">
+            <button id="btn-prev-page" class="btn-outline" style="padding: 5px 15px; font-size: 0.8rem;" disabled>Anterior</button>
+            <span id="page-indicator" style="font-size: 0.85rem; font-weight: bold; color: var(--blue-deep);">Página 1</span>
+            <button id="btn-next-page" class="btn-outline" style="padding: 5px 15px; font-size: 0.8rem;" disabled>Siguiente</button>
+        </div>
+    </div>
+</div>
+
+<div class="auth-modal" id="admin-edit-modal" style="z-index: 10001;"> <div class="auth-overlay" id="admin-edit-overlay"></div>
+    <div class="auth-box" style="max-width: 400px;">
+        <button class="auth-close" id="admin-edit-close">✕</button>
+        <h3 class="auth-title">Modificar Usuario</h3>
+        <form id="admin-edit-form" class="auth-form active">
+            <input type="hidden" id="admin-edit-original-email">
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px;">Nombre</label>
+                <input type="text" id="admin-edit-name" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            </div>
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 5px;">Nueva Contraseña (Opcional)</label>
+                <input type="password" id="admin-edit-password" placeholder="Dejar en blanco para mantener actual" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            </div>
+            <button type="submit" class="btn-submit" style="width: 100%; padding: 10px; background: var(--blue-deep, #1A2B6B); color: white; border: none; border-radius: 5px; cursor: pointer;">Guardar Cambios</button>
+        </form>
+    </div>
+</div>
+
 <script src="js/index.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
 
