@@ -2,13 +2,30 @@
    ALPURA – index.js
    Interactive behaviors: Loader, Nav, Slider,
    Scroll Reveal, Stats Counter, Back-to-Top,
-   Auth & Datatable (Search, Edit, Delete)
+   Auth & Datatable (Search, Add, Edit, Delete, Navbar Profile)
    ============================================== */
 
 (function () {
     'use strict';
 
     const API_BASE = 'https://eferreira.pythonanywhere.com';
+
+    // Variables Globales compartidas para el sistema de Avatares
+    let cropperInstance = null;
+    let cropperTargetType = "";
+    let currentRegAvatar = "avatar1.png";
+    let currentUpdateAvatar = null;
+    let currentAdminAddAvatar = "avatar1.png";
+    let currentAdminUpdateAvatar = null;       
+    const MAX_IMAGE_SIZE = 2 * 1024 * 1024; // 2MB
+
+    // Guardar el icono original del usuario para cuando cierre sesión
+    const defaultUserIcon = `
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+    `;
 
     /* ── 1. DOM READY ── */
     document.addEventListener('DOMContentLoaded', init);
@@ -51,7 +68,35 @@
         }, 3500);
     }
 
-    /* ── 2. LOADER ── */
+    /* ── FUNCIÓN GLOBAL DE LECTURA DE ARCHIVOS (CROPPER) ── */
+    function handleFileSelection(e, targetType) {
+        const file = e.target.files[0];
+        if (!file) return;
+        if (file.size > MAX_IMAGE_SIZE) {
+            showToast("La imagen supera el límite permitido de 2MB.", "error");
+            e.target.value = "";
+            return;
+        }
+
+        cropperTargetType = targetType;
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            const imageToCrop = document.getElementById("image-to-crop");
+            imageToCrop.src = event.target.result;
+            document.getElementById("cropper-modal").style.display = "flex";
+
+            if (cropperInstance) cropperInstance.destroy();
+            cropperInstance = new Cropper(imageToCrop, { 
+                aspectRatio: 1, 
+                viewMode: 1, 
+                background: false, 
+                autoCropArea: 0.9 
+            });
+        };
+        reader.readAsDataURL(file);
+    }
+
+    /* ── RESTO DE FUNCIONES UI (Loader, Slider, etc) ── */
     function initLoader() {
         const loader = document.getElementById('page-loader');
         if (!loader) return;
@@ -64,7 +109,6 @@
         }
     }
 
-    /* ── 3. NAVBAR ── */
     function initNav() {
         const navbar = document.getElementById('navbar');
         if (!navbar) return;
@@ -76,7 +120,6 @@
         onScroll();
     }
 
-    /* ── 4. MOBILE MENU ── */
     function initMobileMenu() {
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -97,7 +140,6 @@
         });
     }
 
-    /* ── 5. SEARCH ── */
     function initSearch() {
         const btnSearch = document.getElementById('btn-search');
         const searchBar = document.getElementById('search-bar');
@@ -116,7 +158,6 @@
         });
     }
 
-    /* ── 6. HERO SLIDER ── */
     function initHeroSlider() {
         const slides = document.querySelectorAll('.hero-slide');
         const dots = document.querySelectorAll('.dot');
@@ -160,7 +201,6 @@
         startAuto();
     }
 
-    /* ── 7. SCROLL REVEAL ── */
     function initScrollReveal() {
         const targets = ['.cat-card', '.value-card', '.recipe-card', '.featured-img-wrap', '.featured-content', '.stat-item', '.sust-content'];
         targets.forEach(selector => {
@@ -184,7 +224,6 @@
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     }
 
-    /* ── 8. STATS COUNTER ── */
     function initStatsCounter() {
         const statNums = document.querySelectorAll('.stat-num');
         if (!statNums.length) return;
@@ -216,7 +255,6 @@
         requestAnimationFrame(update);
     }
 
-    /* ── 9. BACK TO TOP ── */
     function initBackToTop() {
         const btn = document.getElementById('back-top');
         if (!btn) return;
@@ -224,7 +262,6 @@
         btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     }
 
-    /* ── 10. SMOOTH ANCHOR SCROLLING ── */
     document.addEventListener('click', (e) => {
         const link = e.target.closest('a[href^="#"]');
         if (!link) return;
@@ -236,7 +273,7 @@
         window.scrollTo({ top, behavior: 'smooth' });
     });
 
-    /* ── 11. AUTHENTICATION & API INTEGRATION (V2 WITH AVATARS) ── */
+    /* ── 11. AUTHENTICATION & API INTEGRATION ── */
     function initAuth() {
         const btnUser = document.getElementById('btn-user');
         const authModal = document.getElementById('auth-modal');
@@ -255,34 +292,7 @@
         const btnLogoutConfirm = document.getElementById('btn-logout-confirm');
         const btnLogoutCancel = document.getElementById('btn-logout-cancel');
 
-        let currentRegAvatar = "avatar1.png";
-        let currentUpdateAvatar = null;
-        let cropperInstance = null;
-        let cropperTargetType = "";
-        const MAX_IMAGE_SIZE = 2 * 1024 * 1024; // 2MB
-
-        function handleFileSelection(e, targetType) {
-            const file = e.target.files[0];
-            if (!file) return;
-            if (file.size > MAX_IMAGE_SIZE) {
-                showToast("La imagen supera el límite permitido de 2MB.", "error");
-                e.target.value = "";
-                return;
-            }
-
-            cropperTargetType = targetType;
-            const reader = new FileReader();
-            reader.onload = function (event) {
-                const imageToCrop = document.getElementById("image-to-crop");
-                imageToCrop.src = event.target.result;
-                document.getElementById("cropper-modal").style.display = "flex";
-
-                if (cropperInstance) cropperInstance.destroy();
-                cropperInstance = new Cropper(imageToCrop, { aspectRatio: 1, viewMode: 1, background: false, autoCropArea: 0.9 });
-            };
-            reader.readAsDataURL(file);
-        }
-
+        // Eventos Cropper
         document.getElementById("reg-file-input")?.addEventListener("change", (e) => handleFileSelection(e, "register"));
         document.getElementById("update-file-input")?.addEventListener("change", (e) => handleFileSelection(e, "update"));
 
@@ -291,8 +301,10 @@
             if (cropperInstance) { cropperInstance.destroy(); cropperInstance = null; }
             const regInput = document.getElementById("reg-file-input");
             const updateInput = document.getElementById("update-file-input");
+            const adminInput = document.getElementById("admin-edit-file-input");
             if (regInput) regInput.value = "";
             if (updateInput) updateInput.value = "";
+            if (adminInput) adminInput.value = "";
         });
 
         document.getElementById("btn-confirm-crop")?.addEventListener("click", () => {
@@ -308,12 +320,18 @@
                 currentUpdateAvatar = base64Image;
                 document.getElementById("update-avatar-preview-img").src = base64Image;
                 document.querySelectorAll(".preset-item-update").forEach(item => item.classList.remove("active"));
+            } else if (cropperTargetType === "adminUpdate") { 
+                currentAdminUpdateAvatar = base64Image;
+                document.getElementById("admin-edit-avatar-preview").src = base64Image;
+                document.querySelectorAll(".preset-item-admin-edit").forEach(img => img.style.borderColor = "transparent");
             }
+
             document.getElementById("cropper-modal").style.display = "none";
             cropperInstance.destroy();
             cropperInstance = null;
         });
 
+        // Presets Usuario
         document.querySelectorAll(".preset-item").forEach(item => {
             item.addEventListener("click", (e) => {
                 document.querySelectorAll(".preset-item").forEach(i => i.classList.remove("active"));
@@ -359,6 +377,7 @@
             });
         });
 
+        // Login
         loginForm?.addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
@@ -395,6 +414,7 @@
             }
         });
 
+        // Register
         registerForm?.addEventListener('submit', async (e) => {
             e.preventDefault();
             const name = document.getElementById('reg-name').value;
@@ -440,6 +460,7 @@
             }
         });
 
+        // Actualizar Perfil
         updateForm?.addEventListener('submit', async (e) => {
             e.preventDefault();
             const sessionUser = JSON.parse(localStorage.getItem('alpura_user'));
@@ -484,6 +505,7 @@
             }
         });
 
+        // Cerrar sesión
         btnLogoutTrigger?.addEventListener('click', () => {
             btnLogoutTrigger.style.display = 'none';
             logoutConfirmBox.style.display = 'block';
@@ -511,17 +533,33 @@
             if (document.getElementById('register-success')) document.getElementById('register-success').textContent = '';
         }
 
+        // --- SISTEMA DE SESIÓN Y NAVBAR DINÁMICO ---
         function checkSession() {
             const userString = localStorage.getItem('alpura_user');
             const navUsersItemDesktop = document.getElementById('nav-users-item');
             const navUsersItemMobile = document.getElementById('nav-users-item-mobile');
+            const btnUser = document.getElementById('btn-user');
 
             if (userString) {
                 const user = JSON.parse(userString);
-                btnUser?.classList.add('logged-in');
+                
+                // Actualizar Visualmente el Navbar
+                const avatarUrl = (user.avatar && (user.avatar.startsWith('http') || user.avatar.startsWith('data:')))
+                    ? user.avatar
+                    : `${API_BASE}/static/avatars/${user.avatar || 'default-avatar.png'}`;
+                
+                if (btnUser) {
+                    btnUser.classList.add('logged-in');
+                    btnUser.innerHTML = `
+                        <img src="${avatarUrl}" alt="${user.name}" class="nav-user-avatar">
+                        <span class="nav-user-name">${user.name}</span>
+                    `;
+                }
+
                 authModal?.classList.add('logged-in-state');
                 if (authTitle) authTitle.textContent = 'Mi Perfil Alpura';
 
+                // Llenar Modal de Perfil
                 const nameDisplay = document.getElementById('profile-user-name');
                 const emailDisplay = document.getElementById('profile-user-email');
                 const inputName = document.getElementById('update-name');
@@ -532,12 +570,12 @@
 
                 const profileAvatarBox = document.querySelector('.profile-avatar');
                 if (profileAvatarBox && user.avatar) {
-                    profileAvatarBox.innerHTML = `<img src="${API_BASE}/static/avatars/${user.avatar}" style="width:100%; height:100%; border-radius:50%; object-fit:cover; border:2px solid var(--blue-sky);">`;
+                    profileAvatarBox.innerHTML = `<img src="${avatarUrl}" style="width:100%; height:100%; border-radius:50%; object-fit:cover; border:2px solid var(--blue-sky);">`;
                 }
 
                 const updatePreviewImg = document.getElementById('update-avatar-preview-img');
                 if (updatePreviewImg && user.avatar) {
-                    updatePreviewImg.src = `${API_BASE}/static/avatars/${user.avatar}`;
+                    updatePreviewImg.src = avatarUrl;
                 }
 
                 document.querySelectorAll(".preset-item-update").forEach(i => i.classList.remove("active"));
@@ -559,14 +597,21 @@
                     });
                 }
 
+                // Mostrar botón Usuarios
                 if (navUsersItemDesktop) navUsersItemDesktop.style.display = 'block';
                 if (navUsersItemMobile) navUsersItemMobile.style.display = 'block';
 
             } else {
-                btnUser?.classList.remove('logged-in');
+                // Cerrar Sesión: Restaurar SVG Original en Navbar
+                if (btnUser) {
+                    btnUser.classList.remove('logged-in');
+                    btnUser.innerHTML = defaultUserIcon;
+                }
+                
                 authModal?.classList.remove('logged-in-state');
                 if (authTitle) authTitle.textContent = 'Bienvenido';
 
+                // Ocultar botón Usuarios
                 if (navUsersItemDesktop) navUsersItemDesktop.style.display = 'none';
                 if (navUsersItemMobile) navUsersItemMobile.style.display = 'none';
 
@@ -575,10 +620,10 @@
         }
     }
 
-    /* ── 12. USERS DATATABLE (Buscador, Editar y Eliminar) ── */
+    /* ── 12. USERS DATATABLE (Buscador, Agregar, Editar con Avatar y Eliminar) ── */
     function initUsersDatatable() {
         let allUsersData = [];
-        let filteredUsersData = []; // NUEVO: Para guardar los resultados de búsqueda
+        let filteredUsersData = []; 
         let currentUsersPage = 1;
         let usersPerPage = 25;
 
@@ -589,9 +634,36 @@
         const limitSelect = document.getElementById('users-limit-select');
         const searchInput = document.getElementById('users-search-input');
 
-        // Modal de Edición de Usuario (Admin)
+        const adminAddModal = document.getElementById('admin-add-modal');
+        const adminAddForm = document.getElementById('admin-add-form');
+        const btnAdminAddUser = document.getElementById('btn-admin-add-user');
+
         const adminEditModal = document.getElementById('admin-edit-modal');
         const adminEditForm = document.getElementById('admin-edit-form');
+
+        document.getElementById("admin-edit-file-input")?.addEventListener("change", (e) => handleFileSelection(e, "adminUpdate"));
+
+        // Presets Admin Add
+        document.querySelectorAll(".preset-item-add").forEach(item => {
+            item.addEventListener("click", (e) => {
+                document.querySelectorAll(".preset-item-add").forEach(i => i.style.borderColor = "transparent");
+                e.target.style.borderColor = "#00AEEF"; 
+                currentAdminAddAvatar = e.target.dataset.avatar;
+                document.getElementById("admin-add-avatar-preview").src = `${API_BASE}/static/avatars/${currentAdminAddAvatar}`;
+            });
+        });
+
+        // Presets Admin Edit
+        document.querySelectorAll(".preset-item-admin-edit").forEach(item => {
+            item.addEventListener("click", (e) => {
+                document.querySelectorAll(".preset-item-admin-edit").forEach(i => i.style.borderColor = "transparent");
+                e.target.style.borderColor = "#00AEEF"; 
+                currentAdminUpdateAvatar = e.target.dataset.avatar;
+                document.getElementById("admin-edit-avatar-preview").src = `${API_BASE}/static/avatars/${currentAdminUpdateAvatar}`;
+                const fileInput = document.getElementById("admin-edit-file-input");
+                if(fileInput) fileInput.value = "";
+            });
+        });
 
         async function fetchUsers() {
             try {
@@ -600,7 +672,6 @@
                 
                 allUsersData = await response.json();
                 
-                // Aplicar el filtro de búsqueda inmediatamente después de recargar
                 const term = (searchInput ? searchInput.value.toLowerCase() : '');
                 if (term) {
                     filteredUsersData = allUsersData.filter(u => u.name.toLowerCase().includes(term) || u.email.toLowerCase().includes(term));
@@ -617,7 +688,7 @@
 
         async function openUsersDatatable() {
             currentUsersPage = 1;
-            if (searchInput) searchInput.value = ''; // Limpiar búsqueda al abrir
+            if (searchInput) searchInput.value = '';
             await fetchUsers();
             if (modal) modal.classList.add('open');
         }
@@ -630,8 +701,6 @@
             
             const startIndex = (currentUsersPage - 1) * usersPerPage;
             const endIndex = startIndex + usersPerPage;
-            
-            // Usamos los datos filtrados en lugar de todos
             const usersToShow = filteredUsersData.slice(startIndex, endIndex);
 
             if (usersToShow.length === 0) {
@@ -646,7 +715,6 @@
                     ? user.avatar
                     : `${API_BASE}/static/avatars/${user.avatar || 'default-avatar.png'}`;
 
-                // NUEVO: Botones de Acción (Editar y Eliminar)
                 tr.innerHTML = `
                     <td style="padding: 10px; width: 60px; text-align: center;">
                         <img src="${avatarUrl}" alt="Avatar" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid #ccc;">
@@ -654,7 +722,7 @@
                     <td style="padding: 10px; font-weight: 600; color: #1A2B6B;">${user.name}</td>
                     <td style="padding: 10px; color: #555;">${user.email}</td>
                     <td style="padding: 10px; text-align: center;">
-                        <button class="btn-edit-user" data-email="${user.email}" data-name="${user.name}" title="Modificar" style="background: #3498db; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; margin-right: 5px;">✏️</button>
+                        <button class="btn-edit-user" data-email="${user.email}" data-name="${user.name}" data-avatar="${user.avatar || ''}" title="Modificar" style="background: #3498db; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; margin-right: 5px;">✏️</button>
                         <button class="btn-delete-user" data-email="${user.email}" title="Eliminar" style="background: #e74c3c; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer;">🗑️</button>
                     </td>
                 `;
@@ -675,7 +743,7 @@
             if (btnNext) btnNext.disabled = (currentUsersPage === totalPages);
         }
 
-        /* ----- EVENTOS DEL BUSCADOR ----- */
+        // Buscador
         searchInput?.addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
             filteredUsersData = allUsersData.filter(u => 
@@ -686,41 +754,55 @@
             renderUsersTable();
         });
 
-        /* ----- DELEGACIÓN DE EVENTOS (EDITAR Y ELIMINAR) ----- */
+        // Botones de Tabla
         tbody?.addEventListener('click', async (e) => {
             const btnEdit = e.target.closest('.btn-edit-user');
             const btnDelete = e.target.closest('.btn-delete-user');
 
-            // --- ACCIÓN: EDITAR ---
             if (btnEdit) {
                 const email = btnEdit.dataset.email;
                 const name = btnEdit.dataset.name;
+                const avatar = btnEdit.dataset.avatar;
                 
                 document.getElementById('admin-edit-original-email').value = email;
                 document.getElementById('admin-edit-name').value = name;
-                document.getElementById('admin-edit-password').value = ''; // Reset
+                document.getElementById('admin-edit-password').value = ''; 
+                
+                currentAdminUpdateAvatar = null;
+                const fileInput = document.getElementById('admin-edit-file-input');
+                if (fileInput) fileInput.value = '';
+
+                const avatarUrl = (avatar && (avatar.startsWith('http') || avatar.startsWith('data:')))
+                    ? avatar
+                    : `${API_BASE}/static/avatars/${avatar || 'default-avatar.png'}`;
+                document.getElementById('admin-edit-avatar-preview').src = avatarUrl;
+
+                document.querySelectorAll(".preset-item-admin-edit").forEach(img => {
+                    if (img.dataset.avatar === avatar) {
+                        img.style.borderColor = "#00AEEF";
+                        currentAdminUpdateAvatar = avatar;
+                    } else {
+                        img.style.borderColor = "transparent";
+                    }
+                });
+
                 adminEditModal?.classList.add('open');
             }
 
-            // --- ACCIÓN: ELIMINAR ---
             if (btnDelete) {
                 const email = btnDelete.dataset.email;
-                if (confirm(`⚠️ ¿Estás completamente seguro de eliminar permanentemente al usuario: ${email}?`)) {
+                if (confirm(`⚠️ ¿Estás seguro de eliminar permanentemente al usuario: ${email}?`)) {
                     try {
                         const response = await fetch(`${API_BASE}/users/delete`, {
-                            method: 'DELETE', // o POST si tu backend usa eso
+                            method: 'DELETE',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ email: email })
                         });
                         
-                        // Validar si falló
-                        if (!response.ok) {
-                            const data = await response.json();
-                            throw new Error(data.error || "No se pudo eliminar al usuario");
-                        }
+                        if (!response.ok) throw new Error("No se pudo eliminar al usuario");
                         
                         showToast("Usuario eliminado correctamente.", "success");
-                        fetchUsers(); // Recarga los datos de fondo sin cerrar el modal
+                        fetchUsers(); 
                     } catch (err) {
                         showToast(err.message, "error");
                     }
@@ -728,50 +810,109 @@
             }
         });
 
-        /* ----- ENVÍO DEL FORMULARIO DE EDICIÓN DE ADMIN ----- */
+        // Agregar Usuario Admin
+        btnAdminAddUser?.addEventListener('click', () => {
+            adminAddForm?.reset();
+            currentAdminAddAvatar = "avatar1.png";
+            document.getElementById('admin-add-avatar-preview').src = `${API_BASE}/static/avatars/avatar1.png`;
+            document.querySelectorAll(".preset-item-add").forEach((img, index) => {
+                img.style.borderColor = index === 0 ? "#00AEEF" : "transparent";
+            });
+            adminAddModal?.classList.add('open');
+        });
+
+        adminAddForm?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('admin-add-name').value;
+            const email = document.getElementById('admin-add-email').value;
+            const password = document.getElementById('admin-add-password').value;
+            const submitBtn = adminAddForm.querySelector('button[type="submit"]');
+
+            submitBtn.textContent = 'Registrando...';
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch(`${API_BASE}/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password, avatar: currentAdminAddAvatar })
+                });
+
+                if (!response.ok) throw new Error('Error al registrar usuario');
+
+                showToast('Usuario agregado exitosamente', 'success');
+                adminAddModal?.classList.remove('open');
+                fetchUsers(); 
+            } catch (err) {
+                showToast(err.message, 'error');
+            } finally {
+                submitBtn.textContent = 'Registrar Usuario';
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Editar Usuario Admin
         adminEditForm?.addEventListener('submit', async (e) => {
             e.preventDefault();
             const originalEmail = document.getElementById('admin-edit-original-email').value;
             const newName = document.getElementById('admin-edit-name').value;
             const newPassword = document.getElementById('admin-edit-password').value;
+            const submitBtn = adminEditForm.querySelector('button[type="submit"]');
+
+            submitBtn.textContent = 'Guardando...';
+            submitBtn.disabled = true;
 
             try {
-                // Reutilizamos el endpoint que ya tienes de actualización
                 const response = await fetch(`${API_BASE}/users/update`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         email_actual: originalEmail,
                         new_name: newName,
-                        new_password: newPassword || undefined
+                        new_password: newPassword || undefined,
+                        new_avatar: currentAdminUpdateAvatar || undefined
                     })
                 });
 
                 if (!response.ok) throw new Error("Error al modificar usuario");
 
-                showToast("Datos de usuario actualizados correctamente", "success");
+                showToast("Datos de usuario actualizados", "success");
                 adminEditModal?.classList.remove('open');
-                fetchUsers(); // Refrescar la tabla
+                fetchUsers(); 
+
+                // Si el usuario editado es el mismo que está logueado, actualizar Navbar
+                const loggedUser = JSON.parse(localStorage.getItem('alpura_user'));
+                if (loggedUser && loggedUser.email === originalEmail) {
+                    const data = await response.json();
+                    localStorage.setItem('alpura_user', JSON.stringify(data.user));
+                    // Aquí llamamos el checkSession para refrescar el navbar automáticamente
+                    // (Esta función está encapsulada, pero al recargar el usuario lo verá o puedes hacer window.location.reload() si lo prefieres)
+                    window.location.reload();
+                }
+
             } catch (err) {
                 showToast(err.message, "error");
+            } finally {
+                submitBtn.textContent = 'Guardar Cambios';
+                submitBtn.disabled = false;
             }
         });
 
-        // Cierre del Mini Modal de Edición
-        document.getElementById('admin-edit-close')?.addEventListener('click', () => {
-            adminEditModal?.classList.remove('open');
-        });
-        document.getElementById('admin-edit-overlay')?.addEventListener('click', () => {
-            adminEditModal?.classList.remove('open');
-        });
+        // Controles de Cierre Modales Admin
+        const closeAdminAddModal = () => { adminAddModal?.classList.remove('open'); };
+        document.getElementById('admin-add-close')?.addEventListener('click', closeAdminAddModal);
+        document.getElementById('admin-add-overlay')?.addEventListener('click', closeAdminAddModal);
 
-        /* ----- MANEJADORES GLOBALES DEL DATATABLE ----- */
+        const closeAdminEditModal = () => { adminEditModal?.classList.remove('open'); };
+        document.getElementById('admin-edit-close')?.addEventListener('click', closeAdminEditModal);
+        document.getElementById('admin-edit-overlay')?.addEventListener('click', closeAdminEditModal);
+
+        // Disparadores Globales
         [linkDesktop, linkMobile].forEach(btn => {
             if (btn) {
                 btn.addEventListener('click', (e) => {
                     e.preventDefault();
                     openUsersDatatable();
-                    
                     const hamburger = document.getElementById('hamburger');
                     const mobileMenu = document.getElementById('mobile-menu');
                     if (hamburger) hamburger.classList.remove('active');
@@ -781,30 +922,13 @@
             }
         });
 
-        limitSelect?.addEventListener('change', () => {
-            currentUsersPage = 1;
-            renderUsersTable();
-        });
-
-        document.getElementById('btn-prev-page')?.addEventListener('click', () => {
-            if (currentUsersPage > 1) {
-                currentUsersPage--;
-                renderUsersTable();
-            }
-        });
-
-        document.getElementById('btn-next-page')?.addEventListener('click', () => {
-            const totalPages = Math.ceil(filteredUsersData.length / usersPerPage);
-            if (currentUsersPage < totalPages) {
-                currentUsersPage++;
-                renderUsersTable();
-            }
-        });
+        limitSelect?.addEventListener('change', () => { currentUsersPage = 1; renderUsersTable(); });
+        document.getElementById('btn-prev-page')?.addEventListener('click', () => { if (currentUsersPage > 1) { currentUsersPage--; renderUsersTable(); } });
+        document.getElementById('btn-next-page')?.addEventListener('click', () => { const totalPages = Math.ceil(filteredUsersData.length / usersPerPage); if (currentUsersPage < totalPages) { currentUsersPage++; renderUsersTable(); } });
 
         const closeBtn = document.getElementById('datatable-close');
         const overlay = document.getElementById('datatable-overlay');
         const cerrarModal = () => { if (modal) modal.classList.remove('open'); };
-
         closeBtn?.addEventListener('click', cerrarModal);
         overlay?.addEventListener('click', cerrarModal);
     }

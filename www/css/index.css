@@ -2083,3 +2083,28 @@ em { font-style: italic; }
     background: var(--gray-light);
     border-radius: 10px;
 }
+
+/* --- ESTILOS PARA EL PERFIL EN EL NAVBAR --- */
+.nav-user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #1A2B6B;
+    vertical-align: middle;
+}
+
+.nav-user-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+/* Ocultar el nombre en móviles para no saturar el menú */
+@media (max-width: 576px) {
+    .nav-user-name {
+        display: none;
+    }
+}
