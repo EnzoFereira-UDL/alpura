@@ -47,25 +47,19 @@ html {
     overscroll-behavior: none;
 }
 
-/* ── STICKY FOOTER REVEAL (desktop only) ──
-   Conaprole-style: el footer queda fijo en el fondo (sticky bottom:0)
-   y el .main-content se desliza sobre él como una "tapa".
-   Solo activo en pantallas ≥ 901px.
-   En móvil el footer es normal (flow).
-*/
+/* ── STICKY FOOTER REVEAL (desktop only) ── */
 @media (min-width: 901px) {
     .main-content {
         position: relative;
-        z-index: 1;              /* Se sitúa SOBRE el footer */
-        background: var(--white);/* Tapa sólida que oculta el footer al scrollear */
+        z-index: 1;              
+        background: var(--white);
     }
     .footer {
         position: sticky;
         bottom: 0;
-        z-index: 0;              /* Debajo del main-content */
+        z-index: 0;              
     }
 }
-
 
 body {
     font-family: var(--font-body);
@@ -349,6 +343,29 @@ em { font-style: italic; }
     transition: transform 0.25s var(--ease);
 }
 .nav-item:hover .chevron { transform: rotate(180deg); }
+
+/* Perfil en Navbar */
+.nav-user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #1A2B6B;
+    vertical-align: middle;
+}
+
+.nav-user-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+@media (max-width: 576px) {
+    .nav-user-name {
+        display: none;
+    }
+}
 
 /* Mega Menu */
 .mega-menu {
@@ -817,7 +834,7 @@ em { font-style: italic; }
 
 @media (min-width: 901px) {
     .featured-section {
-        height: 150vh; /* Aumenta el alto para dar espacio de scroll */
+        height: 150vh; 
         padding: 0;
     }
     .featured-section > .container {
@@ -829,7 +846,6 @@ em { font-style: italic; }
         padding-top: var(--nav-h);
     }
 }
-
 
 .featured-grid {
     display: grid;
@@ -1183,7 +1199,7 @@ em { font-style: italic; }
 /* ── 11. SUSTENTABILIDAD ── */
 .sustentabilidad-section {
     position: relative;
-    padding: calc(var(--section-py) * 1.5) 0 calc(var(--section-py) * 1.5 + 40px); /* Padding inferior extra para la ola */
+    padding: calc(var(--section-py) * 1.5) 0 calc(var(--section-py) * 1.5 + 40px);
     overflow: hidden;
     text-align: center;
 }
@@ -1237,7 +1253,7 @@ em { font-style: italic; }
 
 .sust-wave-bottom {
     position: absolute;
-    bottom: -1px; /* Evita cualquier línea blanca del subpixel rendering */
+    bottom: -1px;
     left: 0;
     width: 100%;
     line-height: 0;
@@ -1252,7 +1268,6 @@ em { font-style: italic; }
 /* ── 12. FOOTER ── */
 .footer {
     background: var(--off-white);
-    /* position y z-index se manejan con el sticky reveal en desktop */
 }
 
 .footer-body {
@@ -1328,7 +1343,6 @@ em { font-style: italic; }
     align-items: center;
     gap: 0.4rem;
     position: relative;
-    /* Subrayado animado con pseudo-elemento */
     padding-bottom: 2px;
     transition: color 0.3s var(--ease);
 }
@@ -1427,14 +1441,12 @@ em { font-style: italic; }
     z-index: 1001;
     box-shadow: 0 8px 24px rgba(26, 43, 107, 0.35);
     opacity: 0;
-    /* Estado inicial: abajo y transparente */
     transform: translateY(20px);
     transition: opacity 0.4s var(--ease), transform 0.4s var(--ease),
                 background 0.25s var(--ease);
     pointer-events: none;
     border: 2px solid transparent;
 }
-/* Cuando es visible: activa la animación flotante */
 .back-top.visible {
     opacity: 1;
     transform: translateY(0);
@@ -1442,7 +1454,6 @@ em { font-style: italic; }
     animation: float-btn 2.4s ease-in-out infinite,
                pulse-ring 2.4s ease-in-out infinite;
 }
-/* Al hacer hover: pausa flotación y sube con color */
 .back-top:hover {
     background: var(--blue-sky);
     border-color: rgba(255,255,255,0.2);
@@ -1475,7 +1486,6 @@ em { font-style: italic; }
 
 @media (max-width: 900px) {
     :root { --section-py: 60px; }
-
     .nav-links { display: none; }
     .hamburger { display: flex; }
 
@@ -1511,15 +1521,12 @@ em { font-style: italic; }
 
 @media (max-width: 640px) {
     :root { --section-py: 50px; --nav-h: 64px; }
-
     .categories-grid { grid-template-columns: repeat(2, 1fr); }
     .values-grid { grid-template-columns: 1fr; }
-
     .footer-grid { grid-template-columns: 1fr; }
-
     .stat-item { flex: 1 1 100%; }
     .stat-divider { display: none; }
-
+    
     .footer-bottom {
         flex-direction: column;
         align-items: center;
@@ -1537,10 +1544,8 @@ em { font-style: italic; }
     .slide-desc { max-width: 100%; }
 
     .scroll-hint { display: none; }
-
     .featured-ctas { justify-content: center; }
     .featured-attrs { justify-content: center; }
-
     .nav-container { padding-inline: 1.5rem; }
 }
 
@@ -1550,7 +1555,7 @@ em { font-style: italic; }
     .btn-primary, .btn-ghost { width: 100%; justify-content: center; }
 }
 
-/* ── 16. AUTH MODAL ── */
+/* ── 16. AUTH MODAL Y CAJAS DINÁMICAS ── */
 .btn-user {
     display: flex;
     align-items: center;
@@ -1561,18 +1566,27 @@ em { font-style: italic; }
     color: rgba(255,255,255,0.85);
     transition: all 0.25s var(--ease);
 }
-.btn-user:hover, .btn-user.logged-in {
+.btn-user:hover {
     background: rgba(255,255,255,0.15);
     color: var(--white);
 }
 .btn-user.logged-in {
-    color: var(--blue-sky); /* Diferenciador visual cuando hay sesión */
+    width: auto;
+    height: auto;
+    border-radius: 20px;
+    padding: 0.2rem 0.6rem 0.2rem 0.2rem;
+    background: transparent;
+    color: var(--white);
+    gap: 8px;
+}
+.btn-user.logged-in:hover {
+    background: rgba(255,255,255,0.15);
 }
 
 .auth-modal {
     position: fixed;
     inset: 0;
-    z-index: 2000;
+    z-index: 999999 !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1596,13 +1610,17 @@ em { font-style: italic; }
 .auth-box {
     position: relative;
     background: var(--white);
-    width: 100%;
-    max-width: 420px;
+    width: 95%;
+    max-width: 460px;
+    max-height: 85vh; 
     border-radius: 20px;
-    padding: 2.5rem 2rem;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    padding: 2rem;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
     transform: translateY(20px) scale(0.95);
     transition: all 0.4s var(--ease-bounce);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 .auth-modal.open .auth-box {
     transform: translateY(0) scale(1);
@@ -1626,7 +1644,8 @@ em { font-style: italic; }
 
 .auth-header {
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.8rem;
+    flex-shrink: 0;
 }
 .auth-logo {
     height: 40px;
@@ -1641,8 +1660,10 @@ em { font-style: italic; }
 
 .auth-tabs {
     display: flex;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
     border-bottom: 2px solid var(--gray-light);
+    gap: 15px;
+    flex-shrink: 0;
 }
 .auth-tab {
     flex: 1;
@@ -1671,7 +1692,24 @@ em { font-style: italic; }
     transform: scaleX(1);
 }
 
-.auth-forms { position: relative; }
+/* Formularios dinámicos con scroll */
+.auth-forms, 
+.auth-profile-view {
+    position: relative;
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+.auth-forms::-webkit-scrollbar,
+.auth-profile-view::-webkit-scrollbar {
+    width: 6px;
+}
+.auth-forms::-webkit-scrollbar-thumb,
+.auth-profile-view::-webkit-scrollbar-thumb {
+    background: var(--gray-light);
+    border-radius: 10px;
+}
+
 .auth-form {
     display: none;
     animation: fadeInForm 0.4s var(--ease) forwards;
@@ -1725,16 +1763,23 @@ em { font-style: italic; }
 }
 
 /* ── 17. NOTIFICACIONES FLOTANTES (TOASTS) ── */
-.toast-container {
+.toast-container,
+#toast-container {
     position: fixed;
     top: 25px;
     right: 25px;
-    z-index: 9999;
+    z-index: 999999 !important;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    pointer-events: none; /* No interrumpe los clics en la app */
+    pointer-events: none;
 }
+
+.alert,
+.alert-container {
+    z-index: 999999 !important; 
+}
+
 .toast {
     background: var(--white);
     color: var(--blue-deep);
@@ -1770,15 +1815,12 @@ em { font-style: italic; }
 }
 
 /* ── 18. ESTILOS DE VISTA DE PERFIL Y CONTROL DE ESTADOS ── */
-
-/* Si el modal tiene la clase 'logged-in-state', ocultamos pestañas de login/registro */
 .auth-modal.logged-in-state #auth-tabs-container,
 .auth-modal.logged-in-state #login-form,
 .auth-modal.logged-in-state #register-form {
     display: none !important;
 }
 
-/* Y mostramos la vista de perfil */
 .auth-profile-view {
     display: none;
     animation: fadeInForm 0.4s var(--ease) forwards;
@@ -1797,6 +1839,15 @@ em { font-style: italic; }
     margin-bottom: 1.5rem;
     border: 1px solid var(--gray-light);
 }
+
+.contenedor-icono-usuario img { 
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    border-radius: 50%;
+    display: block;
+}
+
 .profile-avatar {
     background: var(--blue-sky);
     color: var(--white);
@@ -1825,7 +1876,6 @@ em { font-style: italic; }
     padding-top: 1.2rem;
 }
 
-/* Control de cierre de sesión sin alert de sistema */
 .logout-zone {
     margin-top: 1.5rem;
     border-top: 1px solid var(--gray-light);
@@ -1847,7 +1897,7 @@ em { font-style: italic; }
 }
 
 .logout-confirm-box {
-    display: none; /* Se activa por JS */
+    display: none; 
     background: #fdf2f2;
     border: 1px solid #f5c6cb;
     padding: 1rem;
@@ -1894,7 +1944,7 @@ em { font-style: italic; }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* SELECTORES DE AVATAR Y MODAL DE RECORTE */
+/* Selectores de Avatar y Modal de recorte */
 .avatar-selection-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -1963,7 +2013,7 @@ em { font-style: italic; }
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 99999;
+    z-index: 9999999 !important;
     padding: 1rem;
 }
 .cropper-modal-box {
@@ -2006,105 +2056,7 @@ em { font-style: italic; }
     cursor: pointer;
 }
 
-/* ========================================================
-   CORRECCIÓN DE CAPAS (Z-INDEX) PARA ESTAR FRENTE A LA NAVBAR
-   ======================================================== */
-.auth-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2000; /* Asegura que se dibuje por ENCIMA de la navbar */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s var(--ease);
-}
-
-#toast-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 3000; /* Las alertas flotantes van por encima del modal */
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-/* ========================================================
-   VENTANAS DINÁMICAS CON ALTO MÁXIMO Y SCROLL INTERNO
-   ======================================================== */
-.auth-box {
-    background: var(--white);
-    width: 95%;
-    max-width: 460px;
-    max-height: 85vh; /* Limita la altura al 85% de la pantalla del dispositivo */
-    border-radius: 20px;
-    padding: 2rem;
-    position: relative;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-    display: flex;
-    flex-direction: column; /* Organiza el contenido en columna rígida */
-    overflow: hidden; /* Evita que los bordes redondeados se rompan */
-}
-
-/* El encabezado y las pestañas permanecen fijos en la parte superior */
-.auth-header {
-    margin-bottom: 0.8rem;
-    flex-shrink: 0;
-}
-
-.auth-tabs {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 1.2rem;
-    border-bottom: 1px solid var(--gray-light);
-    flex-shrink: 0;
-}
-
-/* Los contenedores de formularios y perfil absorben el scroll de forma dinámica */
-.auth-forms, 
-.auth-profile-view {
-    flex-grow: 1;
-    overflow-y: auto; /* Activa la barra de scroll vertical solo si es necesario */
-    padding-right: 8px; /* Pequeño espacio para que el scroll no tape los inputs */
-}
-
-/* Estilo estético opcional para la barra de scroll interno (Webkit) */
-.auth-forms::-webkit-scrollbar,
-.auth-profile-view::-webkit-scrollbar {
-    width: 6px;
-}
-.auth-forms::-webkit-scrollbar-thumb,
-.auth-profile-view::-webkit-scrollbar-thumb {
-    background: var(--gray-light);
-    border-radius: 10px;
-}
-
-/* --- ESTILOS PARA EL PERFIL EN EL NAVBAR --- */
-.nav-user-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #1A2B6B;
-    vertical-align: middle;
-}
-
-.nav-user-name {
-    font-size: 14px;
-    font-weight: 600;
-    color: #ffffff;
-    margin-left: 8px;
-    vertical-align: middle;
-}
-
-/* Ocultar el nombre en móviles para no saturar el menú */
-@media (max-width: 576px) {
-    .nav-user-name {
-        display: none;
-    }
+/* ── 19. OVERLAYS Y UTILIDADES COMPLEMENTARIAS ── */
+.modal-container {
+    z-index: 9999 !important; 
 }
